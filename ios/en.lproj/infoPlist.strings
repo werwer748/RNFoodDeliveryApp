@@ -1,0 +1,8 @@
+/* 
+  infoPlist.strings
+  FoodDeliveryApp
+
+  Created by 강준기 on 2022/08/04.
+ 
+*/
+"CFBundleDisplayName" = "FoodDeliveryApp";
