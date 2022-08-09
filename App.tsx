@@ -1,66 +1,73 @@
 import * as React from 'react';
-import {NavigationContainer, ParamListBase} from '@react-navigation/native';
-import {
-  createNativeStackNavigator,
-  NativeStackScreenProps,
-} from '@react-navigation/native-stack';
-import {Text, View, TouchableHighlight, TouchableOpacity, TouchableNativeFeedback, TouchableWithoutFeedback, Button, Pressable} from 'react-native';
-//? TouchableHighlight, TouchableOpacity, TouchableNativeFeedback, TouchableWithoutFeedback, Button, Pressable <- 버튼 종류
-import {useCallback} from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import Settings from './src/pages/Settings';
+import Orders from './src/pages/Orders';
+import Delivery from './src/pages/Delivery';
+import {useState} from 'react';
+import SignIn from './src/pages/SignIn';
+import SignUp from './src/pages/SignUp';
 
-type RootStackParamList = {
-  Home: undefined;
-  Details: undefined;
+export type LoggedInParamList = {
+    Order: undefined; // 주문 화면
+    Settings: undefined; // 정산?
+    Delivery: undefined; // 배달
+    Complete: { orderId: string };
+    //* 파라미터를 넣어준 페이지에서 변수처럼 자유롭게 사용할 수 있다.
+    //* 파라미터 넣는건 자유!
+    //* 다른 페이지에서 지금 페이지로 값을 전달해야 하는 경우 사용하면 좋다.
 };
-type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
-type DetailsScreenProps = NativeStackScreenProps<ParamListBase, 'Details'>;
 
-function HomeScreen({navigation}: HomeScreenProps) {
-  const onClick = useCallback(() => {
-    navigation.navigate('Details');
-  }, [navigation]);
+export type RootStackParamList = {
+    SignIn: undefined; // 로그인
+    SignUp: undefined; // 회원가입
+};
 
-  return (
-    <>
-    <View style={{ flex: 1, backgroundColor: 'yellow', justifyContent: 'center', alignItems: 'flex-end' }}>
-      <Pressable onPress={onClick} style={{ paddingVertical: 20,paddingHorizontal: 40, backgroundColor: 'royalblue' }}>
-        <Text style={{ color: 'white' }}>Home Screen</Text>
-      </Pressable>
-    </View>
-    <View style={{ flex: 5, backgroundColor: 'pink' }}><Text>SSSSSS</Text></View>
-    </>
-  );
-}
+// 타입을 지정해서 로그인 전, 후 조건문에서 오류가 나지 않게 할 수 있다.
 
-function DetailsScreen({navigation}: DetailsScreenProps) {
-  const onClick = useCallback(() => {
-    navigation.navigate('Home');
-  }, [navigation]);
-
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <TouchableHighlight onPress={onClick}>
-        <Text>Details Screen</Text>
-      </TouchableHighlight>
-    </View>
-  );
-}
-
+const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+
 function App() {
-  return (
-    // 기본꼴
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Details">
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{title: '홈화면'}}
-        />
-        <Stack.Screen name="Details" component={DetailsScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+    const [isLoggedIn, setLoggedIn] = useState(false);
+
+    return (
+        <NavigationContainer>
+            {isLoggedIn ? (
+              <Tab.Navigator>
+                <Tab.Screen
+                  name="Orders"
+                  component={Orders}
+                  options={{ title: '오더 목록' }}
+                />
+                <Tab.Screen
+                  name="Delivery"
+                  component={Delivery}
+                  options={{ headerShown: false }}
+                />
+                <Tab.Screen
+                  name="Settings"
+                  component={Settings}
+                  options={{ title: '내 정보' }}
+                />
+              </Tab.Navigator>
+            ) : (
+              <Stack.Navigator>
+                <Stack.Screen
+                  name="SignIn"
+                  component={SignIn}
+                  options={{ title: '로그인' }}
+                />
+                <Stack.Screen
+                  name="SignUp"
+                  component={SignUp}
+                  options={{ title: '회원가입' }}
+                />
+              </Stack.Navigator>
+            )}
+        </NavigationContainer>
+    );
 }
 
 export default App;
