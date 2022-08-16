@@ -7,14 +7,22 @@ import {
     Text,
     TextInput,
     View,
+    ActivityIndicator,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../App';
+import EncryptedStorage from 'react-native-encrypted-storage';
 import DismissKeyboardView from '../components/DismissKeyboardView';
+import axios, { AxiosError } from 'axios';
+import Config from 'react-native-config';
+import { RootStackParamList } from '../../AppInner';
+import { useAppDispatch } from '../store';
+import userSlice from '../slices/user';
 
 type SignInScreenProps = NativeStackScreenProps<RootStackParamList, 'SignIn'>;
 
 function SignIn({ navigation }: SignInScreenProps) {
+    const dispatch = useAppDispatch(); //타입 잡아놓은걸 불러다 쓴다.
+    const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const emailRef = useRef<TextInput | null>(null); // generic
@@ -28,15 +36,38 @@ function SignIn({ navigation }: SignInScreenProps) {
         setPassword(text);
     }, []);
 
-    const onSubmit = useCallback(() => {
+    const onSubmit = useCallback(async () => {
+        if (loading) {
+            return;
+        }
         if (!email || !email.trim()) {
             return Alert.alert('알림', '이메일을 입력해주세요.');
         }
         if (!password || !password.trim()) {
             return Alert.alert('알림', '비밀번호를 입력해주세요.');
         }
-        Alert.alert('알림', '로그인 되었습니다.');
-    }, [email, password]);
+        try {
+            setLoading(true);
+            const response = await axios.post(`${Config.API_URL}/login`, { email, password });
+            console.log(response.data);
+            Alert.alert('알림', '로그인 되었습니다.');
+            dispatch(
+                userSlice.actions.setUser({
+                    name: response.data.data.name,
+                    email: response.data.data.email,
+                    accessToken: response.data.data.accessToken,
+                }),
+            );
+            await EncryptedStorage.setItem('refreshToken', response.data.data.responseToken);
+        } catch (error) {
+            const errorResponse = (error as AxiosError<{ message: string }>).response;
+            if (errorResponse) {
+                Alert.alert('알림', errorResponse.data.message);
+            }
+        } finally {
+            setLoading(false);
+        }
+    }, [loading, email, password, dispatch]);
 
     const toSignUp = useCallback(() => {
         navigation.navigate('SignUp');
@@ -49,37 +80,39 @@ function SignIn({ navigation }: SignInScreenProps) {
             <View style={styles.inputWrapper}>
                 <Text style={styles.label}>이메일</Text>
                 <TextInput
-                    placeholder="이메일을 입력해 주세요."
-                    placeholderTextColor="black"
                     style={styles.textInput}
-                    value={email}
                     onChangeText={onChangeEmail}
+                    placeholder="이메일을 입력해 주세요."
+                    placeholderTextColor="#666"
                     importantForAutofill="yes" // 로그인 자동완성 관려 부
                     autoComplete="email"
                     textContentType="emailAddress"
-                    keyboardType="email-address"
+                    value={email}
                     returnKeyType="next"
+                    clearButtonMode="while-editing" // 한번에 지우기 IOS만 적용(공식문서 ㄱㄱ)
+                    keyboardType="email-address"
                     ref={emailRef}
                     onSubmitEditing={() => {
                         //입력완료후 동작
                         passwordRef.current?.focus();
                     }}
                     blurOnSubmit={false} // 입력 완료후 키보드 유지
-                    clearButtonMode="while-editing" // 한번에 지우기 IOS만 적용(공식문서 ㄱㄱ)
                 />
             </View>
             <View style={styles.inputWrapper}>
                 <Text style={styles.label}>비밀번호</Text>
                 <TextInput
-                    placeholder="비밀번호를 입력해 주세요."
-                    placeholderTextColor="black"
-                    value={password}
                     style={styles.textInput}
-                    onChangeText={onChangePassword}
-                    secureTextEntry
+                    placeholder="비밀번호를 입력해 주세요."
+                    placeholderTextColor="#666"
                     importantForAutofill="yes"
+                    onChangeText={onChangePassword}
+                    value={password}
                     autoComplete="password"
                     textContentType="password"
+                    returnKeyType="send"
+                    secureTextEntry
+                    clearButtonMode="while-editing" // 한번에 지우기 IOS만 적용(공식문서 ㄱㄱ)
                     ref={passwordRef}
                     onSubmitEditing={onSubmit}
                 />
@@ -91,14 +124,15 @@ function SignIn({ navigation }: SignInScreenProps) {
                         !canGoNext
                             ? styles.loginButton
                             : // : [styles.loginButton, styles.loginButtonActive]
-                              StyleSheet.compose(
-                                  styles.loginButton,
-                                  styles.loginButtonActive,
-                              )
+                              StyleSheet.compose(styles.loginButton, styles.loginButtonActive)
                     }
-                    disabled={!canGoNext}
+                    disabled={!canGoNext || loading}
                 >
-                    <Text style={styles.loginButtonText}>로그인</Text>
+                    {loading ? (
+                        <ActivityIndicator color="violet" />
+                    ) : (
+                        <Text style={styles.loginButtonText}>로그인</Text>
+                    )}
                 </Pressable>
                 <Pressable onPress={toSignUp} style={styles.loginButton}>
                     <Text style={styles.loginButtonText}>회원가입</Text>

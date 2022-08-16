@@ -3,7 +3,6 @@ import axios, { AxiosError } from 'axios';
 import {
     ActivityIndicator,
     Alert,
-    KeyboardAvoidingView,
     Platform,
     Pressable,
     StyleSheet,
@@ -12,8 +11,13 @@ import {
     View,
 } from 'react-native';
 import DismissKeyboardView from '../components/DismissKeyboardView';
+import Config from 'react-native-config';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../AppInner';
 
-function SignUp() {
+type SignUpScreenProps = NativeStackScreenProps<RootStackParamList, 'SignUp'>;
+
+function SignUp({ navigation }: SignUpScreenProps) {
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
@@ -55,29 +59,26 @@ function SignUp() {
         ) {
             return Alert.alert('알림', '올바른 이메일 주소가 아닙니다.');
         }
-        if (
-            !/^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@^!%*#?&]).{8,50}$/.test(
-                password,
-            )
-        ) {
+        if (!/^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@^!%*#?&]).{8,50}$/.test(password)) {
             return Alert.alert(
                 '알림',
                 '비밀번호는 영문, 숫자, 특수문자($@^!%*#?&)를 모두 포함하여 8자 이상 입력해야합니다.',
             );
         }
-        console.log(email, name, password);
+        console.log('여긴가', email, name, password);
         try {
             setLoading(true);
-            const response = await axios.post('/user', {
+            //192.168.219.105
+            const response = await axios.post(`${Config.API_URL}/user`, {
                 email,
                 name,
                 password,
             });
             console.log('통신값!', response);
             Alert.alert('알림', '회원가입 되었습니다.');
+            navigation.navigate('SignIn');
         } catch (error) {
-            const errorResponse = (error as AxiosError<{ message: string }>)
-                .response;
+            const errorResponse = (error as AxiosError<{ message: string }>).response;
             console.error();
             if (errorResponse) {
                 Alert.alert('알림', errorResponse.data.message);
@@ -85,8 +86,7 @@ function SignUp() {
         } finally {
             setLoading(false);
         }
-        Alert.alert('알림', '회원가입 되었습니다.');
-    }, [loading, email, name, password]);
+    }, [loading, email, name, password, navigation]);
 
     const canGoNext = email && name && password;
     return (
@@ -131,9 +131,7 @@ function SignUp() {
                     placeholderTextColor="#666"
                     onChangeText={onChangePassword}
                     value={password}
-                    keyboardType={
-                        Platform.OS === 'android' ? 'default' : 'ascii-capable'
-                    }
+                    keyboardType={Platform.OS === 'android' ? 'default' : 'ascii-capable'}
                     textContentType="password"
                     secureTextEntry
                     returnKeyType="send"
