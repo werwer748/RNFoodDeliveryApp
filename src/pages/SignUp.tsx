@@ -37,7 +37,7 @@ function SignUp({ navigation }: SignUpScreenProps) {
     const onChangePassword = useCallback((text: string) => {
         setPassword(text.trim());
     }, []);
-
+    console.log(Config.API_URL);
     const onSubmit = useCallback(async () => {
         // useEffect 는 리턴값이 클린업 함수여서 async 를 쓸 수 없다.
         if (loading) {
@@ -68,7 +68,6 @@ function SignUp({ navigation }: SignUpScreenProps) {
         console.log('여긴가', email, name, password);
         try {
             setLoading(true);
-            //192.168.219.105
             const response = await axios.post(`${Config.API_URL}/user`, {
                 email,
                 name,
