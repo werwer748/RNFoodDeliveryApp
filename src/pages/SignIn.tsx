@@ -55,11 +55,10 @@ function SignIn({ navigation }: SignInScreenProps) {
                 userSlice.actions.setUser({
                     name: response.data.data.name,
                     email: response.data.data.email,
-                    accessToken: response.data.data.accessToken,
-                    refreshToken: response.data.data.refreshToken,
+                    accessToken: response.data.data.accessToken, // 유효기간 10분, 5분, 1시간
                 }),
             );
-            await EncryptedStorage.setItem('refreshToken', response.data.data.responseToken);
+            await EncryptedStorage.setItem('refreshToken', response.data.data.responseToken); // promise임
         } catch (error) {
             const errorResponse = (error as AxiosError<{ message: string }>).response;
             if (errorResponse) {

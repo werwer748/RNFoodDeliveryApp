@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -9,6 +10,7 @@ import SignIn from './src/pages/SignIn';
 import SignUp from './src/pages/SignUp';
 import { useSelector } from 'react-redux';
 import { RootState } from './src/store/reducer';
+import useSocket from './src/hooks/useSocket';
 
 export type LoggedInParamList = {
     Order: undefined; // 주문 화면
@@ -33,6 +35,36 @@ const Stack = createNativeStackNavigator();
 function AppInner() {
     const isLoggedIn = useSelector((state: RootState) => !!state.user.email); //!! 써서 boolean 값으로 변환
     // 프로바이더 밖에서는 유즈셀렉터 호출이 불가능(당연한건데 왜 까먹...?)
+    const [socket, disconnect] = useSocket();
+
+    //소켓 데이터 -> 키 = 값
+    // 'userInfo', { name: 'hugoK', birth: 1993 }
+    // 'order', { orderId: '1312s', price: 9000, ...}
+    useEffect(() => {
+        const helloCallback = (data: any) => {
+            console.log('helloCallback', data);
+            console.log('error', data?.io?.$error?.[0]);
+        };
+        if (socket && isLoggedIn) {
+            // console.log(socket);
+            // socket.emit('login', 'hello');
+            socket.on('hello', helloCallback);
+        }
+
+        return () => {
+            if (socket) {
+                socket.off('hello', helloCallback);
+            }
+        };
+    }, [isLoggedIn, socket]);
+
+    useEffect(() => {
+        if (!isLoggedIn) {
+            console.log('!isLoggedIn', !isLoggedIn);
+            disconnect();
+        }
+    }, [isLoggedIn, disconnect]);
+
     return (
         <NavigationContainer>
             {isLoggedIn ? ( // 스크린 묶어주라는 에러가 뜨면 <Tab.Group></Tab.Group>으로 묶는다.

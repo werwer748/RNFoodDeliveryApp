@@ -19,12 +19,12 @@ const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
+        // 리듀서
         // 동기 액션
         setUser(state, action) {
             state.email = action.payload.email;
             state.name = action.payload.name;
             state.accessToken = action.payload.accessToken;
-            state.refreshToken = action.payload.refreshToken;
         },
         setName(state, action) {
             state.name = action.payload;
