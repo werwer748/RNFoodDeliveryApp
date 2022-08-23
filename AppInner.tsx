@@ -1,16 +1,25 @@
-import * as React from 'react';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import axios, { AxiosError } from 'axios';
+import { useSelector } from 'react-redux';
+import { Alert } from 'react-native';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import Config from 'react-native-config';
+
+import { RootState } from './src/store/reducer';
+import { useAppDispatch } from './src/store/index';
+import userSlice from './src/slices/user';
+import orderSlice from './src/slices/order';
+
+import useSocket from './src/hooks/useSocket';
+
 import Settings from './src/pages/Settings';
 import Orders from './src/pages/Orders';
 import Delivery from './src/pages/Delivery';
 import SignIn from './src/pages/SignIn';
 import SignUp from './src/pages/SignUp';
-import { useSelector } from 'react-redux';
-import { RootState } from './src/store/reducer';
-import useSocket from './src/hooks/useSocket';
 
 export type LoggedInParamList = {
     Order: undefined; // 주문 화면
@@ -33,6 +42,7 @@ const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 function AppInner() {
+    const dispatch = useAppDispatch();
     const isLoggedIn = useSelector((state: RootState) => !!state.user.email); //!! 써서 boolean 값으로 변환
     // 프로바이더 밖에서는 유즈셀렉터 호출이 불가능(당연한건데 왜 까먹...?)
     const [socket, disconnect] = useSocket();
@@ -41,22 +51,21 @@ function AppInner() {
     // 'userInfo', { name: 'hugoK', birth: 1993 }
     // 'order', { orderId: '1312s', price: 9000, ...}
     useEffect(() => {
-        const helloCallback = (data: any) => {
-            console.log('helloCallback', data);
-            console.log('error', data?.io?.$error?.[0]);
+        const callback = (data: any) => {
+            console.log(data);
+            dispatch(orderSlice.actions.addOrder(data));
         };
         if (socket && isLoggedIn) {
-            // console.log(socket);
-            // socket.emit('login', 'hello');
-            socket.on('hello', helloCallback);
+            socket.emit('acceptOrder', 'hello');
+            socket.on('order', callback);
         }
 
         return () => {
             if (socket) {
-                socket.off('hello', helloCallback);
+                socket.off('order', callback);
             }
         };
-    }, [isLoggedIn, socket]);
+    }, [dispatch, isLoggedIn, socket]);
 
     useEffect(() => {
         if (!isLoggedIn) {
@@ -64,6 +73,42 @@ function AppInner() {
             disconnect();
         }
     }, [isLoggedIn, disconnect]);
+
+    //* 앱 실행시 토큰 있으면 로그인 유지해주는 함수.
+    useEffect(() => {
+        const getTokenAndRefresh = async () => {
+            try {
+                const token = await EncryptedStorage.getItem('refreshToken');
+                if (!token) {
+                    return;
+                }
+                const response = await axios.post(
+                    `${Config.API_URL}/refreshToken`,
+                    {},
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    },
+                );
+                dispatch(
+                    userSlice.actions.setUser({
+                        name: response.data.data.name,
+                        email: response.data.data.email,
+                        accessToken: response.data.data.accessToken,
+                    }),
+                );
+            } catch (error) {
+                console.error(error);
+                if ((error as AxiosError<{ code: string }>).response?.data.code === 'expired') {
+                    Alert.alert('알림', '다시 로그인 해주세요.');
+                }
+            } finally {
+                //TODO: 스플래시 스크린 없애기
+            }
+        };
+        getTokenAndRefresh();
+    }, [dispatch]); //? 전부터 왜 dispatch넣는지 이해안됐었는데 eslint가 넣으라고 시킨다 함
 
     return (
         <NavigationContainer>

@@ -1,20 +1,25 @@
 import React, { useCallback } from 'react';
-import { FlatList, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useSelector } from 'react-redux';
-import EachOrder from '../components/EachOrder';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Order } from '../slices/order';
-import { RootState } from '../store/reducer';
 
-function Orders() {
-    const orders = useSelector((state: RootState) => state.order.orders);
-
+function EachOrder({ item }: { item: Order }) {
     const toggleDetail = useCallback(() => {}, []);
-
-    const renderItem = useCallback(({ item }: { item: Order }) => {
-        return <EachOrder item={item} />;
-    }, []);
-
-    return <FlatList data={orders} keyExtractor={item => item.orderId} renderItem={renderItem} />;
+    return (
+        <View style={styles.orderContainer}>
+            <Pressable onPress={toggleDetail} style={styles.info}>
+                <Text>{item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</Text>
+                <Text style={styles.eachInfo}>
+                    {/* {getDistanceFromLatLonInKm(
+                                start.latitude,
+                                start.longitude,
+                                end.latitude,
+                                end.longitude,
+                            ).toFixed(1)} */}
+                    km
+                </Text>
+            </Pressable>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -56,4 +61,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Orders;
+export default EachOrder;
