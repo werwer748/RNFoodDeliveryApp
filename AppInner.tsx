@@ -47,6 +47,36 @@ function AppInner() {
     // 프로바이더 밖에서는 유즈셀렉터 호출이 불가능(당연한건데 왜 까먹...?)
     const [socket, disconnect] = useSocket();
 
+    useEffect(() => {
+        axios.interceptors.response.use(
+            response => response,
+            async error => {
+                const {
+                    config,
+                    response: { status },
+                } = error;
+                if (status === 419) {
+                    console.log('419떳어요!!!!');
+                    if (error.response.data.code === 'expired') {
+                        const originalRequest = config;
+                        const refreshToken = await EncryptedStorage.getItem('refreshToken');
+                        // token refresh  요청
+                        const { data } = await axios.post(
+                            `${Config.API_URL}/refreshToken`,
+                            {},
+                            { headers: { Authoriation: `Bearer ${refreshToken}` } },
+                        );
+                        // 새로운 토큰 저장
+                        dispatch(userSlice.actions.setAccessToken(data.data.accessToken));
+                        originalRequest.headers.Authorization = `Bearer ${data.data.accessToken}`;
+                        return axios(originalRequest);
+                    }
+                }
+                return Promise.reject(error);
+            },
+        );
+    }, [dispatch]);
+
     //소켓 데이터 -> 키 = 값
     // 'userInfo', { name: 'hugoK', birth: 1993 }
     // 'order', { orderId: '1312s', price: 9000, ...}
