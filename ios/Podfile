@@ -23,6 +23,8 @@ target 'FoodDeliveryApp' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  use_flipper!()
+
   target 'FoodDeliveryAppTests' do
     inherit! :complete
     # Pods for testing
