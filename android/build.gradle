@@ -33,10 +33,6 @@ buildscript {
 allprojects {
     repositories {
         maven {
-            // 네이버 맵 때문에 추기
-            url 'https://naver.jfrog.io/artifactory/maven/'
-        }
-        maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
             url("$rootDir/../node_modules/react-native/android")
         }
@@ -53,5 +49,10 @@ allprojects {
         }
         google()
         maven { url 'https://www.jitpack.io' }
+        
+        maven {
+            // 네이버 맵 때문에 추기
+            url 'https://naver.jfrog.io/artifactory/maven/'
+        }
     }
 }

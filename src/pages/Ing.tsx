@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 function Ing() {
     return (
         <View>
-            <Text>잉!~?</Text>
+            <Text style={{ color: 'black' }}>잉!~?</Text>
         </View>
     );
 }

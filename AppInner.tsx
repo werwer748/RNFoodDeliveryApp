@@ -14,6 +14,7 @@ import userSlice from './src/slices/user';
 import orderSlice from './src/slices/order';
 
 import useSocket from './src/hooks/useSocket';
+import usePermissions from './src/hooks/usePermissions';
 
 import Settings from './src/pages/Settings';
 import Orders from './src/pages/Orders';
@@ -47,6 +48,8 @@ function AppInner() {
     // 프로바이더 밖에서는 유즈셀렉터 호출이 불가능(당연한건데 왜 까먹...?)
     const [socket, disconnect] = useSocket();
 
+    usePermissions();
+    console.log('???', Config);
     useEffect(() => {
         axios.interceptors.response.use(
             response => response,

@@ -9,6 +9,15 @@ production = ENV["PRODUCTION"] == "1"
 target 'FoodDeliveryApp' do
   config = use_native_modules!
 
+  # IOS 권한요청을 위해 추가!
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-Camera', :path => "#{permissions_path}/Camera" # 카메라
+  pod 'Permission-LocationAccuracy', :path => "#{permissions_path}/LocationAccuracy" # 정확한 위치(베터리소모심해짐)
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways" # 위치 항상
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse" # 위치 사용할 때 만
+  pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications" # 알림
+  pod 'Permission-PhotoLibrary', :path => "#{permissions_path}/PhotoLibrary" # 앨범
+
   # Flags change depending on the env values.
   flags = get_default_flags()
 
