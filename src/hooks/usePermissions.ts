@@ -68,7 +68,7 @@ function usePermissions() {
             //* 안드로이드 일때 - 카메라 권한
             check(PERMISSIONS.ANDROID.CAMERA)
                 .then(result => {
-                    if (result === RESULTS.DENIED || result === RESULTS.GRANTED) {
+                    if (result === RESULTS.DENIED || result === RESULTS.GRANTED) { // result === RESULTS.GRANTED 이거 없으면 에러로 처되어서 추가
                         return request(PERMISSIONS.ANDROID.CAMERA);
                     } else {
                         console.log(result);

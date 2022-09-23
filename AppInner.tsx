@@ -49,7 +49,7 @@ function AppInner() {
     const [socket, disconnect] = useSocket();
 
     usePermissions();
-    console.log('???', Config);
+
     useEffect(() => {
         axios.interceptors.response.use(
             response => response,
@@ -59,7 +59,9 @@ function AppInner() {
                     response: { status },
                 } = error;
                 if (status === 419) {
-                    console.log('419떳어요!!!!');
+                    console.log('에러 리스폰', error.response);
+                    console.log('에러리스폰에 데이타', error.response.data);
+                    console.log('에러리스폰에 데이타에 코드', error.response.data.code);
                     if (error.response.data.code === 'expired') {
                         const originalRequest = config;
                         const refreshToken = await EncryptedStorage.getItem('refreshToken');

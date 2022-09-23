@@ -21,11 +21,12 @@ function EachOrder({ item }: { item: Order }) {
     const { start, end } = item;
 
     const toggleDetail = useCallback(() => {
-        setDetail(prev => !prev);
-    }, []);
+        setDetail(!detail);
+    }, [detail]);
 
     const onAccept = useCallback(async () => {
         try {
+            console.log('클릭감지!');
             setLoading(false);
             await axios.post(
                 `${Config.API_URL}/accept`,
@@ -47,6 +48,7 @@ function EachOrder({ item }: { item: Order }) {
     }, [dispatch, item.orderId, accessToken, navigation]);
 
     const onReject = useCallback(() => {
+        console.log('클릭감지!');
         dispatch(orderSlice.actions.rejectOrder(item.orderId));
     }, [dispatch, item.orderId]);
 
@@ -109,14 +111,14 @@ function EachOrder({ item }: { item: Order }) {
                     <View style={styles.buttonWrapper}>
                         <Pressable
                             onPress={onAccept}
-                            disabled={loading}
+                            // disabled={loading}
                             style={styles.acceptButton}
                         >
                             <Text style={styles.buttonText}>수락</Text>
                         </Pressable>
                         <Pressable
                             onPress={onReject}
-                            disabled={loading}
+                            // disabled={loading}
                             style={styles.rejectButton}
                         >
                             <Text style={styles.buttonText}>거절</Text>
