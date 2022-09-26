@@ -59,21 +59,24 @@ function AppInner() {
                     response: { status },
                 } = error;
                 if (status === 419) {
-                    console.log('에러 리스폰', error.response);
-                    console.log('에러리스폰에 데이타', error.response.data);
                     console.log('에러리스폰에 데이타에 코드', error.response.data.code);
-                    if (error.response.data.code === 'expired') {
+                    if (error.response.data.code === 'expred') {
+                        console.log('리프레쉬 과정 1', error.response.data.code);
                         const originalRequest = config;
+                        console.log('리프레쉬 과정 2', config);
                         const refreshToken = await EncryptedStorage.getItem('refreshToken');
+                        console.log('리프레쉬 과정 3', refreshToken);
                         // token refresh  요청
                         const { data } = await axios.post(
                             `${Config.API_URL}/refreshToken`,
                             {},
                             { headers: { Authoriation: `Bearer ${refreshToken}` } },
                         );
+                        console.log('리프레쉬 과정 4', data);
                         // 새로운 토큰 저장
                         dispatch(userSlice.actions.setAccessToken(data.data.accessToken));
                         originalRequest.headers.Authorization = `Bearer ${data.data.accessToken}`;
+                        console.log('리프레쉬 과정 5', originalRequest);
                         return axios(originalRequest);
                     }
                 }

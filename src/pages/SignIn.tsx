@@ -51,6 +51,10 @@ function SignIn({ navigation }: SignInScreenProps) {
             const response = await axios.post(`${Config.API_URL}/login`, { email, password });
             console.log(response.data);
             Alert.alert('알림', '로그인 되었습니다.');
+            await EncryptedStorage.setItem(
+                'refreshToken',
+                JSON.stringify(response.data.data.responseToken),
+            ); // promise임
             dispatch(
                 userSlice.actions.setUser({
                     name: response.data.data.name,
@@ -58,7 +62,6 @@ function SignIn({ navigation }: SignInScreenProps) {
                     accessToken: response.data.data.accessToken, // 유효기간 10분, 5분, 1시간
                 }),
             );
-            await EncryptedStorage.setItem('refreshToken', response.data.data.responseToken); // promise임
         } catch (error) {
             const errorResponse = (error as AxiosError<{ message: string }>).response;
             if (errorResponse) {
