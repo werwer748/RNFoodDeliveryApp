@@ -49,12 +49,9 @@ function SignIn({ navigation }: SignInScreenProps) {
         try {
             setLoading(true);
             const response = await axios.post(`${Config.API_URL}/login`, { email, password });
-            console.log(response.data);
-            Alert.alert('알림', '로그인 되었습니다.');
-            await EncryptedStorage.setItem(
-                'refreshToken',
-                JSON.stringify(response.data.data.responseToken),
-            ); // promise임
+            console.log(response.data.data);
+            Alert.alert('알림', '로그인 되었습니다!');
+            await EncryptedStorage.setItem('refreshToken', response.data.data.refreshToken); // promise임
             dispatch(
                 userSlice.actions.setUser({
                     name: response.data.data.name,

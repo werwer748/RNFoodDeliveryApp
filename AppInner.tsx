@@ -60,7 +60,7 @@ function AppInner() {
                 } = error;
                 if (status === 419) {
                     console.log('에러리스폰에 데이타에 코드', error.response.data.code);
-                    if (error.response.data.code === 'expred') {
+                    if (error.response.data.code === 'expired') {
                         console.log('리프레쉬 과정 1', error.response.data.code);
                         const originalRequest = config;
                         console.log('리프레쉬 과정 2', config);

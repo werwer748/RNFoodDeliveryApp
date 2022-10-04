@@ -68,7 +68,7 @@ function Complete() {
             includeBase64: true, // 미리보기를 위해서 추가
             includeExif: true, // 넣어주면 좋은 옵션
             //? 폰을 어떻게 들고 찍었느냐에 따라 다른 숫자가 나온다! (exif orientation으로 검색)
-            // saveToPhotos: true, // 원래 없는 옵션 (라이브러리 뜯어고칠 꺼)
+            saveToPhotos: true, // 원래 없는 옵션 (라이브러리 뜯어고칠 꺼)
         })
             .then(onResponse)
             .catch(console.log);
