@@ -33,6 +33,7 @@ target 'FoodDeliveryApp' do
   )
 
   use_flipper!()
+  pod 'NMapsMap','3.10.1'
 
   target 'FoodDeliveryAppTests' do
     inherit! :complete
