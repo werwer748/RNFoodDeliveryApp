@@ -47,6 +47,9 @@ const orderSlice = createSlice({
                 state.deliveries.splice(deliveryIndex, 1);
             }
         },
+        cleanOrder(state, action: PayloadAction<null>) {
+            state.orders = [];
+        },
     },
     extraReducers: builder => {},
 });

@@ -69,7 +69,6 @@ function AppInner() {
                         // token refresh  요청
                         const { data } = await axios.post(
                             `${Config.API_URL}/refreshToken`,
-                            {},
                             { headers: { Authoriation: `Bearer ${refreshToken}` } },
                         );
                         console.log('리프레쉬 과정 4', data);
