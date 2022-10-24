@@ -16,6 +16,7 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		9A6F69C1289AC7970048263D /* infoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A6F69C3289AC7970048263D /* infoPlist.strings */; };
 		F2844B4A28FEECCD00367990 /* RCTTMap.m in Sources */ = {isa = PBXBuildFile; fileRef = F2844B4928FEECCC00367990 /* RCTTMap.m */; };
+		F2E42ECB2906DDD90001803E /* TopLib_Op.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F2E42ECA2906DDD90001803E /* TopLib_Op.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,26 @@
 		F2844B4828FEEC8000367990 /* RCTTMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RCTTMap.h; path = FoodDeliveryApp/RCTTMap.h; sourceTree = "<group>"; };
 		F2844B4928FEECCC00367990 /* RCTTMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RCTTMap.m; path = FoodDeliveryApp/RCTTMap.m; sourceTree = "<group>"; };
 		F2844B4C28FEEEAF00367990 /* FoodDeliveryApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FoodDeliveryApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		F2E42ECA2906DDD90001803E /* TopLib_Op.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = TopLib_Op.a; path = "../../../Downloads/[iOS]TmapSDK_1.51/lib/TopLib_Op.a"; sourceTree = "<group>"; };
+		F2E42ECC2906DDEF0001803E /* TMapPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMapPoint.h; path = "../../../../Downloads/[iOS]TmapSDK_1.51/lib/Headers/TMapPoint.h"; sourceTree = "<group>"; };
+		F2E42ECD2906DDEF0001803E /* TMapPolyLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMapPolyLine.h; path = "../../../../Downloads/[iOS]TmapSDK_1.51/lib/Headers/TMapPolyLine.h"; sourceTree = "<group>"; };
+		F2E42ECE2906DDEF0001803E /* TMapMarkerItem2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMapMarkerItem2.h; path = "../../../../Downloads/[iOS]TmapSDK_1.51/lib/Headers/TMapMarkerItem2.h"; sourceTree = "<group>"; };
+		F2E42ECF2906DDEF0001803E /* TMapOverlayItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMapOverlayItem.h; path = "../../../../Downloads/[iOS]TmapSDK_1.51/lib/Headers/TMapOverlayItem.h"; sourceTree = "<group>"; };
+		F2E42ED02906DDEF0001803E /* TMapKatec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMapKatec.h; path = "../../../../Downloads/[iOS]TmapSDK_1.51/lib/Headers/TMapKatec.h"; sourceTree = "<group>"; };
+		F2E42ED12906DDEF0001803E /* TMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMapView.h; path = "../../../../Downloads/[iOS]TmapSDK_1.51/lib/Headers/TMapView.h"; sourceTree = "<group>"; };
+		F2E42ED22906DDF00001803E /* TMapTapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMapTapi.h; path = "../../../../Downloads/[iOS]TmapSDK_1.51/lib/Headers/TMapTapi.h"; sourceTree = "<group>"; };
+		F2E42ED32906DDF00001803E /* BizCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BizCategory.h; path = "../../../../Downloads/[iOS]TmapSDK_1.51/lib/Headers/BizCategory.h"; sourceTree = "<group>"; };
+		F2E42ED42906DDF00001803E /* TMapMarkerItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMapMarkerItem.h; path = "../../../../Downloads/[iOS]TmapSDK_1.51/lib/Headers/TMapMarkerItem.h"; sourceTree = "<group>"; };
+		F2E42ED52906DDF00001803E /* TMapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMapAnnotation.h; path = "../../../../Downloads/[iOS]TmapSDK_1.51/lib/Headers/TMapAnnotation.h"; sourceTree = "<group>"; };
+		F2E42ED62906DDF00001803E /* TMapPathData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMapPathData.h; path = "../../../../Downloads/[iOS]TmapSDK_1.51/lib/Headers/TMapPathData.h"; sourceTree = "<group>"; };
+		F2E42ED72906DDF00001803E /* TMapBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMapBaseView.h; path = "../../../../Downloads/[iOS]TmapSDK_1.51/lib/Headers/TMapBaseView.h"; sourceTree = "<group>"; };
+		F2E42ED82906DDF00001803E /* TMapCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMapCircle.h; path = "../../../../Downloads/[iOS]TmapSDK_1.51/lib/Headers/TMapCircle.h"; sourceTree = "<group>"; };
+		F2E42ED92906DDF10001803E /* TMapPolygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMapPolygon.h; path = "../../../../Downloads/[iOS]TmapSDK_1.51/lib/Headers/TMapPolygon.h"; sourceTree = "<group>"; };
+		F2E42EDA2906DDF10001803E /* TMapType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMapType.h; path = "../../../../Downloads/[iOS]TmapSDK_1.51/lib/Headers/TMapType.h"; sourceTree = "<group>"; };
+		F2E42EDB2906DDF10001803E /* TMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMap.h; path = "../../../../Downloads/[iOS]TmapSDK_1.51/lib/Headers/TMap.h"; sourceTree = "<group>"; };
+		F2E42EDC2906DDF10001803E /* TMapPOIItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMapPOIItem.h; path = "../../../../Downloads/[iOS]TmapSDK_1.51/lib/Headers/TMapPOIItem.h"; sourceTree = "<group>"; };
+		F2E42EDD2906DDF10001803E /* TMapObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMapObject.h; path = "../../../../Downloads/[iOS]TmapSDK_1.51/lib/Headers/TMapObject.h"; sourceTree = "<group>"; };
+		F2E42EDE2906DDF10001803E /* TMapGpsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMapGpsManager.h; path = "../../../../Downloads/[iOS]TmapSDK_1.51/lib/Headers/TMapGpsManager.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2E42ECB2906DDD90001803E /* TopLib_Op.a in Frameworks */,
 				0C80B921A6F3F58F76C31292 /* libPods-FoodDeliveryApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -127,6 +149,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				F2E42ECA2906DDD90001803E /* TopLib_Op.a */,
+				F2E42EB62906D9480001803E /* Headers */,
 				13B07FAE1A68108700A75B9A /* FoodDeliveryApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* FoodDeliveryAppTests */,
@@ -157,6 +181,32 @@
 				89C6BE57DB24E9ADA2F236DE /* Pods-FoodDeliveryApp-FoodDeliveryAppTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		F2E42EB62906D9480001803E /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				F2E42ED32906DDF00001803E /* BizCategory.h */,
+				F2E42EDB2906DDF10001803E /* TMap.h */,
+				F2E42ED52906DDF00001803E /* TMapAnnotation.h */,
+				F2E42ED72906DDF00001803E /* TMapBaseView.h */,
+				F2E42ED82906DDF00001803E /* TMapCircle.h */,
+				F2E42EDE2906DDF10001803E /* TMapGpsManager.h */,
+				F2E42ED02906DDEF0001803E /* TMapKatec.h */,
+				F2E42ED42906DDF00001803E /* TMapMarkerItem.h */,
+				F2E42ECE2906DDEF0001803E /* TMapMarkerItem2.h */,
+				F2E42EDD2906DDF10001803E /* TMapObject.h */,
+				F2E42ECF2906DDEF0001803E /* TMapOverlayItem.h */,
+				F2E42ED62906DDF00001803E /* TMapPathData.h */,
+				F2E42EDC2906DDF10001803E /* TMapPOIItem.h */,
+				F2E42ECC2906DDEF0001803E /* TMapPoint.h */,
+				F2E42ED92906DDF10001803E /* TMapPolygon.h */,
+				F2E42ECD2906DDEF0001803E /* TMapPolyLine.h */,
+				F2E42ED22906DDF00001803E /* TMapTapi.h */,
+				F2E42EDA2906DDF10001803E /* TMapType.h */,
+				F2E42ED12906DDEF0001803E /* TMapView.h */,
+			);
+			path = Headers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -521,6 +571,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -549,6 +603,10 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
