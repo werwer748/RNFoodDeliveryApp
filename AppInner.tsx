@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { Alert } from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import Config from 'react-native-config';
+import SplashScreen from 'react-native-splash-screen';
 
 import { RootState } from './src/store/reducer';
 import { useAppDispatch } from './src/store/index';
@@ -117,6 +118,7 @@ function AppInner() {
             try {
                 const token = await EncryptedStorage.getItem('refreshToken');
                 if (!token) {
+                    SplashScreen.hide();
                     return;
                 }
                 const response = await axios.post(
@@ -142,6 +144,7 @@ function AppInner() {
                 }
             } finally {
                 //TODO: 스플래시 스크린 없애기
+                SplashScreen.hide();
             }
         };
         getTokenAndRefresh();
