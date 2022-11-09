@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { Text, View, Alert, Pressable, StyleSheet } from 'react-native';
+import { Text, View, Alert, Pressable, StyleSheet, FlatList } from 'react-native';
 import axios, { AxiosError } from 'axios';
 import Config from 'react-native-config';
 import { useAppDispatch } from '../store/index';
@@ -7,10 +7,13 @@ import userSlice from '../slices/user';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/reducer';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import orderSlice, { Order } from '../slices/order';
+import CompleteOrder from '../components/CompleteOrder';
 
 function Settings() {
     const name = useSelector((state: RootState) => state.user.name);
     const money = useSelector((state: RootState) => state.user.money);
+    const completes = useSelector((state: RootState) => state.order.completes);
     const accessToken = useSelector((state: RootState) => state.user.accessToken);
     const dispatch = useAppDispatch();
 
@@ -22,6 +25,16 @@ function Settings() {
             dispatch(userSlice.actions.setMoney(response.data.data));
         }
         getMoney();
+    }, [dispatch, accessToken]);
+
+    useEffect(() => {
+        async function getCompletes() {
+            const response = await axios.get<{ data: Order[] }>(`${Config.API_URL}/completes`, {
+                headers: { Authorization: `Bearer ${accessToken}` },
+            });
+            dispatch(orderSlice.actions.setCompletes(response.data.data));
+        }
+        getCompletes();
     }, [dispatch, accessToken]);
 
     const onLogout = useCallback(async () => {
@@ -61,6 +74,16 @@ function Settings() {
                     원
                 </Text>
             </View>
+
+            <View>
+                <FlatList
+                    keyExtractor={o => o.orderId}
+                    numColumns={3}
+                    data={completes}
+                    renderItem={({ item }: {item: Order}) => <CompleteOrder item={item} /> }
+                />
+            </View>
+
             <View style={styles.buttonZone}>
                 <Pressable
                     style={[styles.loginButton, styles.loginButtonActive]}

@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import axios, { AxiosError } from 'axios';
 import { useSelector } from 'react-redux';
-import { Alert } from 'react-native';
+import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import Config from 'react-native-config';
 import SplashScreen from 'react-native-splash-screen';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 import { RootState } from './src/store/reducer';
 import { useAppDispatch } from './src/store/index';
@@ -48,6 +50,7 @@ function AppInner() {
     const isLoggedIn = useSelector((state: RootState) => !!state.user.email); //!! 써서 boolean 값으로 변환
     // 프로바이더 밖에서는 유즈셀렉터 호출이 불가능(당연한건데 왜 까먹...?)
     const [socket, disconnect] = useSocket();
+    const [modal, setModal] = useState(true);
 
     usePermissions();
 
@@ -152,18 +155,38 @@ function AppInner() {
 
     return (
         <NavigationContainer>
+            {/* 아래쪽에 위치한 컴포넌트들이 중요도가 높다. */}
             {isLoggedIn ? ( // 스크린 묶어주라는 에러가 뜨면 <Tab.Group></Tab.Group>으로 묶는다.
                 <Tab.Navigator>
-                    <Tab.Screen name="Orders" component={Orders} options={{ title: '오더 목록' }} />
+                    <Tab.Screen
+                        name="Orders"
+                        component={Orders}
+                        options={{
+                            title: '오더 목록',
+                            tabBarIcon: ({ color: string }) => (
+                                <FontAwesome5Icon name="list" size={20} />
+                            ),
+                            // tabBarActiveTintColor: 'yellowgreen',
+                        }}
+                    />
+
                     <Tab.Screen
                         name="Delivery"
                         component={Delivery}
-                        options={{ headerShown: false }}
+                        options={{
+                            headerShown: false,
+                            title: '지도',
+                            tabBarIcon: () => <FontAwesome5Icon name="map" size={20} />,
+                        }}
                     />
                     <Tab.Screen
                         name="Settings"
                         component={Settings}
-                        options={{ title: '내 정보' }}
+                        options={{
+                            title: '내 정보',
+                            unmountOnBlur: true,
+                            tabBarIcon: () => <FontAwesomeIcon name="gear" size={20} />,
+                        }}
                     />
                 </Tab.Navigator>
             ) : (
@@ -176,8 +199,46 @@ function AppInner() {
                     />
                 </Stack.Navigator>
             )}
+            {/* 탭, 스크린 네비게이터들 보다 아래위치시킴 (바텀 텝바아래에 컴포넌트가 찍힌다. ) */}
+            {modal && (
+            <Pressable
+                onPress={() => setModal(false)}
+                style={styles.modal}
+            >
+                <View style={styles.modalContent}>
+                    <View>
+                        <Text style={{ color: 'white' }}>모달 본문</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', position: 'absolute', bottom: 30 }}>
+                        <Pressable style={{ flex: 1, alignItems: 'center' }}>
+                            <Text style={{ color: 'white' }}>네</Text>
+                        </Pressable>
+                        <Pressable style={{ flex: 1, alignItems: 'center' }}>
+                            <Text style={{ color: 'white' }}>아니오</Text>
+                        </Pressable>
+                    </View>
+                </View>
+            </Pressable>
+            )}
         </NavigationContainer>
     );
 }
+
+const styles = StyleSheet.create({
+    modal: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        ...StyleSheet.absoluteFillObject,
+    },
+    modalContent: {
+        position: 'absolute',
+        top: 50,
+        bottom: 50,
+        left: 20,
+        right: 20,
+        backgroundColor: 'red',
+        borderRadius: 20,
+        padding: 20,
+    },
+});
 
 export default AppInner;

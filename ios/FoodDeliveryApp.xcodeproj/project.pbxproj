@@ -17,6 +17,10 @@
 		9A6F69C1289AC7970048263D /* infoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A6F69C3289AC7970048263D /* infoPlist.strings */; };
 		F2844B4A28FEECCD00367990 /* RCTTMap.m in Sources */ = {isa = PBXBuildFile; fileRef = F2844B4928FEECCC00367990 /* RCTTMap.m */; };
 		F2E42ECB2906DDD90001803E /* TopLib_Op.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F2E42ECA2906DDD90001803E /* TopLib_Op.a */; };
+		F2F3B968291B86E8006FD0C3 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F2F3B964291B86E8006FD0C3 /* FontAwesome5_Brands.ttf */; };
+		F2F3B969291B86E8006FD0C3 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F2F3B965291B86E8006FD0C3 /* FontAwesome.ttf */; };
+		F2F3B96A291B86E8006FD0C3 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F2F3B966291B86E8006FD0C3 /* FontAwesome5_Regular.ttf */; };
+		F2F3B96B291B86E8006FD0C3 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F2F3B967291B86E8006FD0C3 /* FontAwesome5_Solid.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +76,10 @@
 		F2E42EDC2906DDF10001803E /* TMapPOIItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMapPOIItem.h; path = "../../../../Downloads/[iOS]TmapSDK_1.51/lib/Headers/TMapPOIItem.h"; sourceTree = "<group>"; };
 		F2E42EDD2906DDF10001803E /* TMapObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMapObject.h; path = "../../../../Downloads/[iOS]TmapSDK_1.51/lib/Headers/TMapObject.h"; sourceTree = "<group>"; };
 		F2E42EDE2906DDF10001803E /* TMapGpsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMapGpsManager.h; path = "../../../../Downloads/[iOS]TmapSDK_1.51/lib/Headers/TMapGpsManager.h"; sourceTree = "<group>"; };
+		F2F3B964291B86E8006FD0C3 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Brands.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
+		F2F3B965291B86E8006FD0C3 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		F2F3B966291B86E8006FD0C3 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Regular.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
+		F2F3B967291B86E8006FD0C3 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Solid.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +157,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				F2F3B963291B867B006FD0C3 /* Fonts */,
 				F2E42ECA2906DDD90001803E /* TopLib_Op.a */,
 				F2E42EB62906D9480001803E /* Headers */,
 				13B07FAE1A68108700A75B9A /* FoodDeliveryApp */,
@@ -207,6 +216,17 @@
 				F2E42ED12906DDEF0001803E /* TMapView.h */,
 			);
 			path = Headers;
+			sourceTree = "<group>";
+		};
+		F2F3B963291B867B006FD0C3 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				F2F3B965291B86E8006FD0C3 /* FontAwesome.ttf */,
+				F2F3B964291B86E8006FD0C3 /* FontAwesome5_Brands.ttf */,
+				F2F3B966291B86E8006FD0C3 /* FontAwesome5_Regular.ttf */,
+				F2F3B967291B86E8006FD0C3 /* FontAwesome5_Solid.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -304,7 +324,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2F3B96B291B86E8006FD0C3 /* FontAwesome5_Solid.ttf in Resources */,
+				F2F3B96A291B86E8006FD0C3 /* FontAwesome5_Regular.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				F2F3B969291B86E8006FD0C3 /* FontAwesome.ttf in Resources */,
+				F2F3B968291B86E8006FD0C3 /* FontAwesome5_Brands.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				9A6F69C1289AC7970048263D /* infoPlist.strings in Resources */,
 			);
